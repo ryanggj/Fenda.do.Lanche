@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fenda do Lanche - Cardápio Completo</title>
+    <style>
+        :root {
+            --bg-dark: #020d1f;
+            --card-bg: #051630;
+            --yellow-primary: #ffd700;
+            --text-light: #ffffff;
+            --text-muted: #8fa0ba;
+            --success-color: #25d366;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            color: var(--yellow-primary);
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-transform: uppercase;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 992px) {
+            .container {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+        }
+
+        /* Seção Principal */
+        .main-content {
+            flex: 2;
+        }
+
+        .section-title {
+            color: var(--yellow-primary);
+            border-bottom: 2px solid #0a254d;
+            padding-bottom: 8px;
+            margin: 30px 0 20px 0;
+            font-size: 1.6rem;
+            text-transform: uppercase;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #0a254d;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        /* Ilustrações Minimalistas */
+        .item-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+            text-align: left;
+        }
+
+        .product-card h3 {
+            color: var(--yellow-primary);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .options-group {
+            margin-bottom: 12px;
+        }
+
+        .options-group label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--yellow-primary);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .options-group select, .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--bg-dark);
+            color: white;
+            border: 1px solid #0a254d;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .checkbox-custom {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .checkbox-custom input {
+            accent-color: var(--yellow-primary);
+            width: 16px;
+            height: 16px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #0a254d;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .btn-add {
+            background-color: var(--yellow-primary);
+            color: #000;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-add:hover {
+            transform: scale(1.03);
+            background-color: #e6c200;
+        }
+
+        /* Lateral: Checkout e Carrinho */
+        .sidebar {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .cart-section, .checkout-section, .contact-section {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #0a254d;
+        }
+
+        .cart-section h2, .checkout-section h2, .contact-section h2 {
+            border-bottom: 2px solid var(--bg-dark);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            color: var(--yellow-primary);
+            font-size: 1.3rem;
+            text-transform: uppercase;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #0a254d;
+            font-size: 0.9rem;
+        }
+
+        .cart-item button {
+            background: none;
+            border: none;
+            color: #ff4d4d;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 0 5px;
+        }
+
+        .cart-total {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            color: var(--yellow-primary);
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+            color: var(--text-muted);
+        }
+
+        .btn-submit {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            background-color: var(--success-color);
+            color: white;
+            transition: transform 0.2s;
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.02);
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 10px;
+            background-color: var(--bg-dark);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            border: 1px solid #0a254d;
+        }
+
+        .contact-link:hover {
+            border-color: var(--yellow-primary);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>FENDA DO LANCHE</h1>
+        <p>O sabor que você conhece, na Fenda que você ama!</p>
+    </header>
+
+    <div class="container">
+        
+        <main class="main-content">
+            
+            <h2 class="section-title">Combos Promocionais</h2>
+            <div class="menu-grid">
+                
+                <div class="product-card" id="card-combo1">
+                    <div>
+                        <span class="item-icon">👑🍔🥤</span>
+                        <h3>Combo Fenda do Chef</h3>
+                        <p>Pão brioche, hambúrguer de 180g, queijo, bacon, alface, cebola roxa, picles e molho especial. Acompanha batata frita média e bebida.</p>
+                        <div class="options-group">
+                            <label>Escolha a Bebida</label>
+                            <select id="bebida-combo1">
+                                <option value="Refrigerante">Refrigerante</option>
+                                <option value="Suco Natural">Suco Natural</option>
+                                <option value="Milkshake (+R$ 5,00)" data-extra="5">Milkshake (+R$ 5,00)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">R$ 49,90</span>
+                        <button class="btn-add" onclick="adicionarCombo1()">+ Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="product-card" id="card-combo2">
+                    <div>
+                        <span class="item-icon">👩‍❤️‍👨🍔🍔🍟</span>
+                        <h3>Combo Casal da Fenda</h3>
+                        <p>Leve 2 Hambúrgueres Senhor Siri + 1 Batata Fenda Grande + 2 Refrigerantes em lata.</p>
+                        <div class="options-group">
+                            <label>Bebida 1</label>
+                            <select id="bebida1-combo2">
+                                <option value="Coca-Cola">Coca-Cola</option>
+                                <option value="Guaraná">Guaraná</option>
+                                <option value="Fanta Laranja">Fanta Laranja</option>
+                            </select>
+                        </div>
+                        <div class="options-group">
+                            <label>Bebida 2</label>
+                            <select id="bebida2-combo2">
+                                <option value="Coca-Cola">Coca-Cola</option>
+                                <option value="Guaraná">Guaraná</option>
+                                <option value="Fanta Laranja">Fanta Laranja</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">R$ 89,90</span>
+                        <button class="btn-add" onclick="adicionarComboCasal()">+ Adicionar</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <h2 class="section-title">Hambúrgueres</h2>
+            <div class="menu-grid">
+                
+                <div class="product-card">
+                    <div>
+                        <span class="item-icon">🦀🍔</span>
+                        <h3>Senhor Siri</h3>
+                        <p>Pão brioche, blend de 200g, muito queijo cheddar, cebola roxa, alface, tomate, picles e o autêntico molho da Fenda.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">R$ 44,90</span>
+                        <button class="btn-add" onclick="adicionarItemSimples('Senhor Siri', 44.90)">+ Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <span class="item-icon">⭐🍔</span>
+                        <h3>Estrela Suprema</h3>
+                        <p>Pão australiano, blend de 180g, queijo coalho grelhado, cebola caramelizada e maionese artesanal de bacon.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">R$ 38,90</span>
+                        <button class="btn-add" onclick="adicionarItemSimples('Estrela Suprema', 38.90)">+ Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <span class="item-icon">🌱🍔</span>
+                        <h3>Cascudo Burger (Vegano)</h3>
+                        <p>Pão vegano, hambúrguer de grão-de-bico 150g, rúcula, tomate seco e maionese verde vegana.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">R$ 34,90</span>
+                        <button class="btn-add" onclick="adicionarItemSimples('Cascudo Burger', 34.90)">+ Adicionar</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <h2 class="section-title">Acompanhamentos</h2>
+            <div class="menu-grid">
+                
+                <div class="product-card">
+                    <div>
+                        <span class="item-icon">🍟✨</span>
+                        <h3>Batata Fenda</h3>
+                        <p>Crocantes por fora, macias por dentro e temperadas com o tempero secreto da casa.</p>
+                        <div class="options-group">
+                            <label>Tamanho</label>
+                            <select id="tamanho-batata" onchange="atualizarPrecoBatata()">
+                                <option value="P" data-preco="14.90">Pequena (P) - R$ 14,90</option>
+                                <option value="M" data-preco="19.90" selected>Média (M) - R$ 19,90</option>
+                                <option value="G" data-preco="24.90">Grande (G) - R$ 24,90</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="price-row">
+                        <span class="price" id="preco-batata-txt">R$ 19,90</span>
+                        <button class="btn-add" onclick="adicionarBatata()">+ Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div>
+                        <span class="item-icon">🧅🪐</span>
+                        <h3>Anéis de Onion da Fenda</h3>
+                        <p>Anéis de cebola gigantes e super crocantes acompanhados de barbecue.</p>
+                    </div>
+                    <div class="price-row">
+                        <span class="price">R$ 18,90</span>
+                        <button class="btn-add" onclick="adicionarItemSimples('Anéis de Onion', 18.90)">+ Adicionar</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <h2 class="section-title">Monte seu Lanche Personalizado</h2>
+            <div class="product-card" id="custom-burger-section">
+                <div>
+                    <span class="item-icon">🛠️🍔</span>
+                    <p style="margin-bottom: 15px;">Escolha a base e adicione os ingredientes que você preferir!</p>
+                    
+                    <div class="options-group">
+                        <label>1. Escolha o Pão (Base: R$ 12,00)</label>
+                        <select id="custom-pao">
+                            <option value="Pão Brioche">Pão Brioche</option>
+                            <option value="Pão Australiano">Pão Australiano</option>
+                            <option value="Pão Vegano">Pão Vegano</option>
+                        </select>
+                    </div>
+
+                    <div class="options-group">
+                        <label>2. Proteínas (Pode escolher mais de uma)</label>
+                        <div class="checkbox-custom"><input type="checkbox" name="custom-ing" value="Blend Bovino 180g" data-preco="14.00"> Blend Bovino 180g (+R$ 14,00)</div>
+                        <div class="checkbox-custom"><input type="checkbox" name="custom-ing" value="Frango Crispy" data-preco="12.00"> Frango Crispy (+R$ 12,00)</div>
+                    </div>
+
+                    <div class="options-group">
+                        <label>3. Adicionais e Queijos</label>
+                        <div class="checkbox-custom"><input type="checkbox" name="custom-ing" value="Queijo Cheddar" data-preco="4.00"> Queijo Cheddar (+R$ 4,00)</div>
+                        <div class="checkbox-custom"><input type="checkbox" name="custom-ing" value="Bacon Crocante" data-preco="5.50"> Bacon Crocante (+R$ 5,50)</div>
+                        <div class="checkbox-custom"><input type="checkbox" name="custom-ing" value="Ovo Frito" data-preco="3.00"> Ovo Frito (+R$ 3,00)</div>
+                        <div class="checkbox-custom"><input type="checkbox" name="custom-ing" value="Cebola Caramelizada" data-preco="3.50"> Cebola Caramelizada (+R$ 3,50)</div>
+                    </div>
+                </div>
+                <div class="price-row">
+                    <span class="price">Monte o seu!</span>
+                    <button class="btn-add" onclick="adicionarLanchePersonalizado()">+ Adicionar Personalizado</button>
+                </div>
+            </div>
+
+        </main>
+
+        <aside class="sidebar">
+            
+            <div class="cart-section">
+                <h2>Seu Pedido</h2>
+                <div id="cart-items">
+                    <p style="color: var(--text-muted)">Carrinho vazio...</p>
+                </div>
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cart-total-val">R$ 0,00</span>
+                </div>
+            </div>
+
+            <div class="checkout-section">
+                <h2>Finalizar Compra</h2>
+                <div class="form-group">
+                    <label for="cliente-nome">Seu Nome *</label>
+                    <input type="text" id="cliente-nome" placeholder="Ex: Bob Esponja">
+                </div>
+                <div class="form-group">
+                    <label for="cliente-end">Endereço de Entrega *</label>
+                    <input type="text" id="cliente-end" placeholder="Rua, Número, Bairro">
+                </div>
+                <div class="form-group">
+                    <label for="forma-pagamento">Forma de Pagamento *</label>
+                    <select id="forma-pagamento">
+                        <option value="Cartão de Crédito/Débito (Máquina)">Cartão (Levar maquininha)</option>
+                        <option value="Pix">Pix (Direto no app)</option>
+                        <option value="Dinheiro">Dinheiro</option>
+                    </select>
+                </div>
+                <button class="btn-submit" onclick="enviarPedido()">
+                    Enviar via WhatsApp
+                </button>
+            </div>
+
+            <div class="contact-section">
+                <h2>Canais de Atendimento</h2>
+                <div class="contact-links">
+                    <a href="tel:5511999999999" class="contact-link">📞 Central Telefônica: (11) 99999-9999</a>
+                    <a href="mailto:contato@fendadolanche.com" class="contact-link">✉️ E-mail: contato@fendadolanche.com</a>
+                    <a href="https://instagram.com/fenda.do.lanche" target="_blank" class="contact-link">📸 Instagram: @fenda.do.lanche</a>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+
+    <script>
+        // Array estável onde ficam armazenados os itens do carrinho de compras
+        let carrinho = [];
+
+        function renderizarCarrinho() {
+            const container = document.getElementById('cart-items');
+            const totalContainer = document.getElementById('cart-total-val');
+            
+            if (carrinho.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted)">Carrinho vazio...</p>';
+                totalContainer.innerText = 'R$ 0,00';
+                return;
+            }
+
+            container.innerHTML = '';
+            let total = 0;
+
+            carrinho.forEach((item, index) => {
+                total += item.preco;
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${item.nome}</strong><br>
+                            R$ ${item.preco.toFixed(2).replace('.', ',')}
+      
